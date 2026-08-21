@@ -2,6 +2,13 @@
 .Rhistory
 .Rapp.history
 
+# Ingore files
+*.csv
+*.Rdata
+*.rds
+*.xlsx
+/data/
+
 # Session Data files
 .RData
 .RDataTmp

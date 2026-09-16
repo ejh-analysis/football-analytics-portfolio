@@ -1,7 +1,3 @@
-install.packages(c("shiny", "dplyr", "ggplot2", "plotly", "shinythemes", "remotes"))
-remotes::install_github("statsbomb/StatsBombR")
-install.packages("plotly")
-install.packages("DT")
 library(dplyr)
 library(ggplot2)
 library(StatsBombR)
@@ -10,6 +6,7 @@ library(shiny)
 library(ggrepel)
 library(plotly)
 library(DT)
+setwd("C:/OneDrive/Project/football-analytics-portfolio/StatsBomb_Dashboard_1")
 competitions <- FreeCompetitions()
 available_leagues <- competitions %>%
   select(competition_id, season_id, competition_name, season_name) %>%
@@ -112,10 +109,9 @@ player_stats <- player_minutes %>%
 cat("Total qualified players:", nrow(player_stats), "\n")
 
 # Plots
-dev.off()
+# Static Threat Matrix Plot Export
 top_players_plot <- ggplot(player_stats, aes(x = Key_Passes_90, y = xG_90)) +
   geom_point(aes(size = total_minutes, color = team.name), alpha = 0.7) +
-  
   geom_text_repel(
     data = player_stats %>% filter(xG_90 > 0.3 | Key_Passes_90 > 1.8),
     aes(label = player.name),
@@ -139,10 +135,8 @@ top_players_plot <- ggplot(player_stats, aes(x = Key_Passes_90, y = xG_90)) +
     legend.position = "bottom"
   )
 
-print(top_players_plot)
-
+# Save high-res asset for repository README
 ggsave("wsl_offensive_threat_matrix.png", plot = top_players_plot, width = 10, height = 7, dpi = 300)
-
 
 # --- Football Analytics Portfolio: Player Scouting & Metric Explorer Dashboard ---
 
@@ -259,7 +253,7 @@ ui <- fluidPage(
         tabPanel(
           "Metric Scatter Matrix",
           br(),
-          plotlyOutput("scatter_plot", height = "520px"),
+          plotlyOutput("scatter_plot", height = "650px"),
           br(),
           wellPanel(
             h5("Tactical Takeaway:", style = "font-weight: 700; color: #0f172a;"),
@@ -306,37 +300,49 @@ server <- function(input, output, session) {
   })
   
   output$scatter_plot <- renderPlotly({
-    df <- filtered_data()
-    req(nrow(df) > 0)
+    req(nrow(filtered_data()) > 0)
     
-    x_col <- input$x_metric
-    y_col <- input$y_metric
-    x_lbl <- names(metric_choices)[metric_choices == x_col]
-    y_lbl <- names(metric_choices)[metric_choices == y_col]
-    
-    df$hover_text <- paste0(
-      "<b>", df$player_name, "</b> (", df$team_name, ")<br>",
-      "Position: ", df$position, "<br>",
-      "Minutes: ", round(df$minutes_played, 0), "<br>",
-      x_lbl, ": ", df[[x_col]], "<br>",
-      y_lbl, ": ", df[[y_col]]
-    )
-    
-    p <- ggplot(df, aes(x = .data[[x_col]], y = .data[[y_col]], text = hover_text)) +
-      geom_point(aes(color = team_name), size = 3, alpha = 0.75) +
-      theme_minimal(base_family = "sans") +
-      labs(
-        x = x_lbl,
-        y = y_lbl,
-        color = "Team"
-      ) +
-      theme(
-        axis.title = element_text(size = 11, face = "bold"),
-        legend.position = "none"
+    df <- filtered_data() %>%
+      mutate(
+        hover_text = paste0(
+          "<b>", player_name, "</b> (", team_name, ")<br>",
+          "Position: ", position, "<br>",
+          "Minutes: ", round(minutes_played, 0), "<br>",
+          names(metric_choices)[metric_choices == input$x_metric], ": ", .data[[input$x_metric]], "<br>",
+          names(metric_choices)[metric_choices == input$y_metric], ": ", .data[[input$y_metric]]
+        )
       )
     
-    ggplotly(p, tooltip = "text")
+    p <- ggplot(df, aes(
+      x = .data[[input$x_metric]], 
+      y = .data[[input$y_metric]],
+      text = hover_text
+    )) +
+      geom_point(aes(color = team_name, size = minutes_played), alpha = 0.75) +
+      scale_size_continuous(range = c(2.5, 7), guide = "none") +
+      theme_minimal(base_family = "sans") +
+      labs(
+        x = names(metric_choices)[metric_choices == input$x_metric],
+        y = names(metric_choices)[metric_choices == input$y_metric]
+      ) +
+      theme(
+        axis.title = element_text(face = "bold", size = 11),
+        legend.title = element_blank()
+      )
+    
+    ggplotly(p, tooltip = "text") %>%
+      layout(
+        legend = list(
+          orientation = "h",
+          x = 0,
+          y = -0.2,
+          font = list(size = 9),
+          itemsizing = "constant"
+        ),
+        margin = list(b = 100)
+      )
   })
+    
   
   output$player_table <- renderDT({
     filtered_data() %>%
@@ -353,3 +359,4 @@ server <- function(input, output, session) {
 
 # --- 6. Launch App ---
 shinyApp(ui = ui, server = server)
+

@@ -19,23 +19,24 @@ A centralised repository featuring modular end-to-end sports analytics projects,
 ```text
 football-analytics-portfolio/
 │
-├── StatsBomb_Dashboard_1/         # FA WSL Scouting & Metric Matrix
-│   ├── Analysis.R                 # Ingestion, Feature Engineering, & Static Visuals
-│   ├── app.R                      # Optimized Production Shiny Application
-│   └── players_data.rds           # Serialized Per-90 Aggregate Cache
+├── StatsBomb_Dashboard_1/          # FA WSL Scouting & Metric Matrix
+│   ├── Analysis.R                  # Ingestion, Feature Engineering, & Static Visuals
+│   ├── app.R                       # Optimised Production Shiny Application
+│   └── players_data.rds            # Serialised Per-90 Aggregate Cache
 │
-├── wsl_offensive_threat_matrix.png # High-res static visual artifact
-├── README.md                      # Project documentation
+├── wsl_offensive_threat_matrix.png  # High-resolution static visual artifact
+├── README.md                       # Project documentation
 └── football-analytics-portfolio.Rproj
 ```
 ## 🛠️ Data Pipeline & Engineering
+
 ```text
 [StatsBomb API]
        │
        ▼  (FreeMatches / free_allevents)
-[Analysis.R] ─── ETL, Per-90 Normalization ───► [wsl_offensive_threat_matrix.png]
+[Analysis.R] ─── ETL, Per-90 Normalisation ───► [wsl_offensive_threat_matrix.png]
        │
-       ▼  (saveRDS serialization)
+       ▼  (saveRDS serialisation)
 [players_data.rds] (Low-footprint data binary)
        │
        ▼  (readRDS on container boot)

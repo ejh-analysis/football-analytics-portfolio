@@ -42,3 +42,12 @@ football-analytics-portfolio/
        ▼  (readRDS on container boot)
 [app.R (Shiny)] ─── Dynamic Filtering & Plotly Rendering ───► [User Client]
 ```
+## 📊 Analytical Visualisations
+
+### FA WSL 2020/21: Offensive Threat Matrix
+Non-Penalty Expected Goals (npxG) per 90 vs. Key Passes per 90 (Minimum 400 Minutes Played):
+
+![WSL Offensive Threat Matrix](wsl_offensive_threat_matrix.png)
+
+* **Top-Right Quadrant:** Identifies primary dual-threat creators combining both elite goal threat and shot-creation volume.
+* **Point Size:** Scaled by cumulative minutes played across the season.

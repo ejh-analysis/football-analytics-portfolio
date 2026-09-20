@@ -3,51 +3,31 @@
 Welcome! I am Emily, a Data Scientist, with a BSc in Mathematics and an MSc in Data Science. Enthusiastic about sports analytics and data. 
 Specialising in statistical analysis and machine learning using high-dimensional performance data to support player profiling and positional discovery in football.
 
-# ⚽ WSL  Football Analytics Portfolio
+## 📌 Featured Projects
 
-[![Live Dashboard](https://img.shields.io/badge/shinyapps.io-Live%20Explorer-0284c7?style=flat&logo=r&logoColor=white)](https://ejh-analysis.shinyapps.io/wsl-scouting-explorer/)
-[![R Version](https://img.shields.io/badge/R-4.3+-276DC3?style=flat&logo=r&logoColor=white)](https://www.r-project.org/)
-[![Data Provider](https://img.shields.io/badge/Data-StatsBomb%20Open%20Data-red)](https://statsbomb.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-A centralised repository featuring modular end-to-end sports analytics projects, data engineering pipelines, and interactive scouting applications.
+| Project | Focus Area | Tech Stack | Status / Deliverables |
+| :--- | :--- | :--- | :--- |
+| **[1. FA WSL Interactive Scouting Matrix](#-project-1-fa-wsl-scouting--metric-matrix)** | Event Data Analytics & Spatial Metrics | R (Shiny, StatsBombR, ggplot2, plotly) | [![Live App](https://img.shields.io/badge/shinyapps.io-Live%20Explorer-0284c7?style=flat&logo=r)](https://ejh-analysis.shinyapps.io/wsl-scouting-explorer/) |
+| **[2. Optical Telemetry & Bayesian Load Forecasting](#-project-2-optical-telemetry--bayesian-physical-load-forecasting)** | 25Hz Tracking Kinematics & MCMC Forecasting | Python (PyMC, ArviZ, SciPy, Pandas) | [View Module Code & Diagnostics](./python-portfolio/) |
 
 ---
 
-## 📌 Repository Architecture
+## 📁 Repository Structure
 
 ```text
 football-analytics-portfolio/
 │
-├── StatsBomb_Dashboard_1/          # FA WSL Scouting & Metric Matrix
-│   ├── Analysis.R                  # Ingestion, Feature Engineering, & Static Visuals
-│   ├── app.R                       # Optimised Production Shiny Application
-│   └── players_data.rds            # Serialised Per-90 Aggregate Cache
+├── StatsBomb_Dashboard_1/          # [Project 1] R/Shiny Scouting Application
+│   ├── app.R                       # Production reactive UI and server
+│   ├── Analysis.R                  # StatsBomb API ETL & metric derivation
+│   └── players_data.rds            # Serialized Per-90 aggregate cache
 │
-├── wsl_offensive_threat_matrix.png  # High-resolution static visual artifact
-├── README.md                       # Project documentation
-└── football-analytics-portfolio.Rproj
-```
-## 🛠️ Data Pipeline & Engineering
-
-```text
-[StatsBomb API]
-       │
-       ▼  (FreeMatches / free_allevents)
-[Analysis.R] ─── ETL, Per-90 Normalisation ───► [wsl_offensive_threat_matrix.png]
-       │
-       ▼  (saveRDS serialisation)
-[players_data.rds] (Low-footprint data binary)
-       │
-       ▼  (readRDS on container boot)
-[app.R (Shiny)] ─── Dynamic Filtering & Plotly Rendering ───► [User Client]
-```
-## 📊 Analytical Visualisations
-
-### FA WSL 2020/21: Offensive Threat Matrix
-Non-Penalty Expected Goals (npxG) per 90 vs. Key Passes per 90 (Minimum 400 Minutes Played):
-
-![WSL Offensive Threat Matrix](wsl_offensive_threat_matrix.png)
-
-* **Top-Right Quadrant:** Identifies primary dual-threat creators combining both elite goal threat and shot-creation volume.
-* **Point Size:** Scaled by cumulative minutes played across the season.
+├── python-portfolio/               # [Project 2] Python Telemetry & Bayesian Engine
+│   ├── src/
+│   │   ├── tracking_loader.py      # 25Hz Savitzky-Golay coordinate smoothing
+│   │   └── bayesian_load_model.py  # Latent AR(1) MCMC fatigue decay forecaster
+│   ├── requirements.txt            # Python dependencies (PyMC, ArviZ, etc.)
+│   └── README.md                   # In-depth statistical writeup & diagnostics
+│
+├── wsl_offensive_threat_matrix.png  # High-res static visual artifact
+└── README.md                       # Master portfolio documentation

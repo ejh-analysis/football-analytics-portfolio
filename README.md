@@ -7,8 +7,8 @@ Specialising in statistical analysis and machine learning using high-dimensional
 
 | Project | Focus Area | Tech Stack | Status / Deliverables |
 | :--- | :--- | :--- | :--- |
-| **[1. FA WSL Interactive Scouting Matrix](#-project-1-fa-wsl-scouting--metric-matrix)** | Event Data Analytics & Spatial Metrics | R (Shiny, StatsBombR, ggplot2, plotly) | [![Live App](https://img.shields.io/badge/shinyapps.io-Live%20Explorer-0284c7?style=flat&logo=r)](https://ejh-analysis.shinyapps.io/wsl-scouting-explorer/) |
-| **[2. Optical Telemetry & Bayesian Load Forecasting](#-project-2-optical-telemetry--bayesian-physical-load-forecasting)** | 25Hz Tracking Kinematics & MCMC Forecasting | Python (PyMC, ArviZ, SciPy, Pandas) | [View Module Code & Diagnostics](./python-portfolio/) |
+| **[1. FA WSL Interactive Scouting Matrix](./StatsBomb_Dashboard_1/)** | Event Data Analytics & Spatial Metrics | R (Shiny, StatsBombR, ggplot2, plotly) | [![Live App](https://img.shields.io/badge/shinyapps.io-Live%20Explorer-0284c7?style=flat&logo=r)](https://ejh-analysis.shinyapps.io/wsl-scouting-explorer/) |
+| **[2. Optical Telemetry & Bayesian Load Forecasting](./python-portfolio/)** | 25Hz Tracking Kinematics & MCMC Forecasting | Python (PyMC, ArviZ, SciPy, Pandas) | [View Module Code & Diagnostics](./python-portfolio/) |
 
 ---
 
